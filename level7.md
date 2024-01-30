@@ -9,12 +9,15 @@ cat level7.c
 We will start by disabling some protections (the "aslr")
 
 cat /proc/sys/kernel/randomize_va_space
+
 "the variable is set to 2"
 
-echo 0 > /proc/sys/kernel/randomize_va_space (to disable the ASLR protection)
+echo 0 > /proc/sys/kernel/randomize_va_space 
+(to disable the ASLR protection)
 Now we need to compile our program:
 
 gcc -z execstack -fno-stack-protector -m32 level7.c -o level7~
+
 -z execstack: makes the stack executable, allowing us to execute instruction sets in memory, which will allow us to execute our shell code in memory
 -fno-stack-protector: this option allows us to bypass certain protections like canary, this cancels the protection on the "buffer" variable that we will exploit
 -m32: for 32-bit
